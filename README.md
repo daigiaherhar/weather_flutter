@@ -1,16 +1,35 @@
 # weather
 
-A new Flutter project.
+A Weather project.
 
-## Getting Started
+## Project structure
+lib/
+├── core.dart          
+│   ├── theme/
+│   │   ├── app_colors.dart #all colors in app
+│   │   ├── app_images.dart #all image in app
+│   │   ├── app_string.dart #lang
+│   │   ├── app_style.dart #style - include padding, margin, spaces...
+│   │   ├── app_themes.dart #themes of the application, text, background...
+│
+├── models/            # Data models
+├── views/       
+│   │   ├── home/
+│   │   │   ├── bloc/
+│   │   │   │   ├── home_bloc.dart
+│   │   │   │   ├── home_event.dart
+│   │   │   │   ├── home_state.dart
+│   │   │   ├── home_screen.dart #page main
+│
+└── widget/           # UI Screens
+    ├── button_text_widget.dart #button custom
+    ├── error_screen.dart #page error
+    ├── loading_screen.dart #page loading
 
-This project is a starting point for a Flutter application.
+## plugins (pub.dev)
+flutter_bloc: ^9.1.0
+google_fonts: ^6.2.1
+flutter_animate: ^4.5.2
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
