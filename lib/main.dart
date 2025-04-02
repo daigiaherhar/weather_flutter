@@ -1,23 +1,43 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:weather/repositories/weather_repository.dart';
+import 'package:weather/repositories/weather_repository_impl.dart';
 import 'package:weather/views/home/home_screen.dart';
 
 import 'core/theme/theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: 'assets/.env');
+  runApp(
+    RepositoriesProvider(
+      child: MaterialApp(
+        title: 'Weather',
+        theme: AppThemes.light,
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
+      ),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class RepositoriesProvider extends StatelessWidget {
+  final Widget child;
 
-  // This widget is the root of your application.
+  const RepositoriesProvider({Key? key, required this.child}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppThemes.light,
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<WeatherRepository>(
+          create: (context) => WeatherRepositoryImpl(),
+        ),
+      ],
+      child: child,
     );
   }
 }

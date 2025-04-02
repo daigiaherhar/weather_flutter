@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:weather/core/theme/theme.dart';
 
 class AppThemes {
@@ -9,7 +8,8 @@ class AppThemes {
     scaffoldBackgroundColor: AppColors.background,
 
     textTheme: TextTheme(
-      displayLarge: GoogleFonts.roboto(
+      displayLarge: TextStyle(
+        fontFamily: "Roboto",
         fontSize: 96,
         color: AppColors.black,
         fontWeight: FontWeight.w900,
@@ -17,14 +17,16 @@ class AppThemes {
         height: 1.2,
       ),
 
-      displayMedium: GoogleFonts.roboto(
+      displayMedium: TextStyle(
+        fontFamily: "Roboto",
         fontSize: 36,
         color: AppColors.steelBlue,
         fontWeight: FontWeight.w100,
         letterSpacing: 0,
         height: 1.4,
       ),
-      displaySmall: GoogleFonts.roboto(
+      displaySmall: TextStyle(
+        fontFamily: "Roboto",
         fontSize: 16,
         color: AppColors.black,
         fontWeight: FontWeight.w400, // Regular = 400

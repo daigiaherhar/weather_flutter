@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:weather/widgets/widgets.dart';
 
 import '../core/theme/theme.dart';
 
 class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({super.key, required this.message});
+  const ErrorScreen({super.key, required this.message,this.onTap});
 
   final String message;
-
+  final onTap;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -20,7 +19,7 @@ class ErrorScreen extends StatelessWidget {
           children: [
             Text(
               message,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 54,
                 color: AppColors.white,
                 fontWeight: FontWeight.w100, // Thin = 100
@@ -30,7 +29,7 @@ class ErrorScreen extends StatelessWidget {
             SizedBox(height: 44),
             ButtonTextWidget(
               text: WeatherString.btn_retry,
-              ontap: () => print("23432"),
+              ontap: onTap,
             ),
           ],
         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../core/theme/theme.dart';
 
@@ -34,7 +33,7 @@ class ButtonTextWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
             child: Text(
               text ?? "",
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: AppColors.white,
               ),
