@@ -4,6 +4,7 @@ import 'package:weather/data/repositories/weather_repository.dart';
 import 'package:weather/models/weather_model.dart';
 
 import '../services/weather_service.dart';
+import 'package:intl/intl.dart';
 
 class WeatherRepositoryImpl implements WeatherRepository {
   final WeatherService service;
@@ -42,27 +43,44 @@ class WeatherRepositoryImpl implements WeatherRepository {
   }
 
   @override
-  Future<List<WeatherModel>> getForecast3Hour(WeatherModel weatherModel) async {
+  Future<Map<String, List<WeatherModel>>> getForecast3Hour(
+    WeatherModel weatherModel,
+  ) async {
     // TODO: implement getForecast3Hour
 
     try {
-      List<WeatherModel> list = [];
+      Map<String, List<WeatherModel>> data = {};
+
       var response = await service.fetchForecast3Hour(
         lat: weatherModel.coordinates!.lat,
         long: weatherModel.coordinates!.long,
         units: weatherModel.unit.name,
         cnt: 40, // 40 for 5 day, 24 /3 = 8/day
       );
-      if(response['list'] != null && response['list'] != []){
-        response['list'].forEach((value){
-          WeatherModel item = WeatherModel.fromJson(value);
+      if (response['list'] != null && response['list'] != []) {
+        response['list'].forEach((value) {
+          WeatherModel item = WeatherModel.fromJsonForecast(
+            value,
+            response['city'],
+          );
+          DateTime date = DateTime.fromMillisecondsSinceEpoch(
+            item.timestamp * 1000,
+          );
 
-          list.add(item);
-          // print(item['main']);
-          // print(item['dt']);
+          String nameWeekDay = DateFormat.EEEE().format(date);
+          //check weekday
+          if (data.containsKey(date.weekday.toString())) {
+            data[date.weekday.toString()]?.add(item);
+          } else {
+            data.addAll({
+              date.weekday.toString(): [item],
+            });
+          }
         });
+        print("datadatadatadata");
+        print(data);
       }
-      return list;
+      return data;
     } catch (exception) {
       rethrow;
     }

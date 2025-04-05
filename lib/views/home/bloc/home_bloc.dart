@@ -26,20 +26,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final String nameLocation = await weatherRepository.getLocalName(
         WeatherModel(coordinates: coordinatesModel),
       );
-      final  name3Location = await weatherRepository.getForecast3Hour(
-        WeatherModel(coordinates: coordinatesModel),
-      );
+      print("listForelistForelistFore");
+      print(state.listForecast!.length);
+      Map<String, List<WeatherModel>> listFore = await weatherRepository
+          .getForecast3Hour(WeatherModel(coordinates: coordinatesModel));
+
+      print(listFore);
       if (nameLocation.isNotEmpty) {
-        dataCurrent.name = nameLocation;
+        dataCurrent.nameCity = nameLocation;
       }
-      print("DateTime.now().millisecondsSinceEpoch");
-      print((DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000));
-      print(
-        (DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000) - 1743660000,
-      );
-      print(DateTime.fromMillisecondsSinceEpoch(1743660000 * 1000));
+
       emit(
-        state.copyWith(status: HomeStatus.loaded, currentWeather: dataCurrent),
+        state.copyWith(
+          status: HomeStatus.loaded,
+          currentWeather: dataCurrent,
+          listForecast: listFore,
+        ),
       );
     } catch (exception) {
       print("exception");

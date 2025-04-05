@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather/models/weather_model.dart';
 
 import 'package:weather/views/home/bloc/home_bloc.dart';
 import 'package:weather/views/home/bloc/home_state.dart';
@@ -35,10 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: BlocProvider(
-        create:
-            (context) =>
-                HomeBloc()
-                  ..add(InitHomeEvent()),
+        create: (context) => HomeBloc()..add(InitHomeEvent()),
         child: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             final bloc = BlocProvider.of<HomeBloc>(context);
@@ -84,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
             textAlign: TextAlign.center,
           ),
           Text(
-            bloc.state.currentWeather?.name ?? "",
+            bloc.state.currentWeather?.nameCity ?? "",
             style: Theme.of(context).textTheme.displayMedium,
           ),
           SizedBox(height: 62),
@@ -94,30 +92,38 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(color: AppColors.white),
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: 4,
-                itemBuilder:
-                    (context, index) => Container(
-                      height: 80,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 3,
-                            child: Text(
-                              "423423423423423423423423",
-                              style: Theme.of(context).textTheme.displaySmall,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              "fds",
-                              style: Theme.of(context).textTheme.displaySmall,
-                              textAlign: TextAlign.end,
-                            ),
-                          ),
-                        ],
-                      ),
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  // final item = bloc.state.listForecast![index];
+                  String key = bloc.state.listForecast!.keys.elementAt(index);
+                  WeatherModel item = bloc.state.listForecast![key]![0];
+
+                  return Container(
+                    height: 80,
+                    decoration: BoxDecoration(
+                     border: Border(bottom: BorderSide(width: 0.1))
                     ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            item.nameWeekDay ?? "",
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            item.nameTempC(),
+                            style: Theme.of(context).textTheme.displaySmall,
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ),
