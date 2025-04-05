@@ -6,39 +6,36 @@ class WeatherModel {
   double temp;
   CoordinatesModel? coordinates;
   UnitWeather unit;
+  int timestamp;
 
   WeatherModel({
     this.id,
     this.name,
     this.temp = 0,
+    this.timestamp = 0,
     this.coordinates,
     this.unit = UnitWeather.metric,
   }) {
     coordinates ??= CoordinatesModel();
   }
-  String nameTemp(){
-    if(unit == UnitWeather.metric){
+
+  String nameTemp() {
+    if (unit == UnitWeather.metric) {
       return '${temp.round().toString()}°';
     }
     return '${temp.round().toString()}°';
   }
+
   WeatherModel.fromJson(Map<String, dynamic> json)
-    : id = json["id"]??0,
+    : id = json["id"] ?? 0,
       name = json["name"] ?? "",
+      timestamp = json["dt"] ?? "",
       temp = json['main']["temp"] ?? 0,
       coordinates = CoordinatesModel.fromJson(json),
       unit = UnitWeather.metric;
 
   Map<String, dynamic> toMap() {
     return {'id': id, 'name': name, 'temp': temp};
-  }
-
-  Map<String, dynamic> toMapParameterCurrent() {
-    return {
-      'lat': coordinates!.lat,
-      'lon': coordinates!.long,
-      'units': unit.name,
-    };
   }
 
   @override

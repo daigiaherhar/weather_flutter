@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:weather/repositories/weather_repository.dart';
-import 'package:weather/repositories/weather_repository_impl.dart';
+
 import 'package:weather/views/home/bloc/home_bloc.dart';
 import 'package:weather/views/home/bloc/home_state.dart';
 
 import '../../core/theme/theme.dart';
+import '../../data/repositories/weather_repository_impl.dart';
 import '../../widgets/widgets.dart';
 import 'bloc/home_event.dart';
 
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocProvider(
         create:
             (context) =>
-                HomeBloc(weatherRepository: WeatherRepositoryImpl())
+                HomeBloc()
                   ..add(InitHomeEvent()),
         child: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {

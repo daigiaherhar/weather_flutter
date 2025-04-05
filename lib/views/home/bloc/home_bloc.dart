@@ -1,28 +1,43 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../../data/repositories/weather_repository.dart';
 import '../../../models/weather_model.dart';
-import '../../../repositories/weather_repository.dart';
+import '../../../setup_locator.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required this.weatherRepository}) : super(HomeState().init()) {
+  HomeBloc() : super(HomeState().init()) {
     on<InitHomeEvent>(_init);
     on<ChangeStatusEvent>(_changeStatus);
   }
 
-  final WeatherRepository weatherRepository;
+  final WeatherRepository weatherRepository = getIt<WeatherRepository>();
 
   void _init(InitHomeEvent event, Emitter<HomeState> emit) async {
     try {
       await _checkPermission();
-      await Future.delayed(Duration(seconds: 2));
+      // await Future.delayed(Duration(seconds: 2));
       CoordinatesModel coordinatesModel = await getLatLong();
-      final dataCurrent = await weatherRepository.getCurrentWeather(
+      WeatherModel dataCurrent = await weatherRepository.getCurrentWeather(
         WeatherModel(coordinates: coordinatesModel),
       );
-
+      final String nameLocation = await weatherRepository.getLocalName(
+        WeatherModel(coordinates: coordinatesModel),
+      );
+      final  name3Location = await weatherRepository.getForecast3Hour(
+        WeatherModel(coordinates: coordinatesModel),
+      );
+      if (nameLocation.isNotEmpty) {
+        dataCurrent.name = nameLocation;
+      }
+      print("DateTime.now().millisecondsSinceEpoch");
+      print((DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000));
+      print(
+        (DateTime.now().toUtc().millisecondsSinceEpoch ~/ 1000) - 1743660000,
+      );
+      print(DateTime.fromMillisecondsSinceEpoch(1743660000 * 1000));
       emit(
         state.copyWith(status: HomeStatus.loaded, currentWeather: dataCurrent),
       );
