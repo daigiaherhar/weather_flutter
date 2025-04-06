@@ -8,5 +8,6 @@ class AppColors {
   static const Color steelBlue = Color(0xff556799);
   static const Color red = Color(0xffE85959);
   static const Color charcoalGray = Color(0xff4A4A4A);
+  static const Color blueAccent = Colors.blueAccent;
   static const Color white = Colors.white;
 }

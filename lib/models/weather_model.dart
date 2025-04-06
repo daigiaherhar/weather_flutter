@@ -41,7 +41,7 @@ class WeatherModel {
     : id = json["id"] ?? 0,
       nameCity = json["name"] ?? "",
       timestamp = json["dt"] ?? "",
-      temp = json['main']["temp"] ?? 0,
+      temp = json['main']["temp"] ?? 0.0,
       coordinates = CoordinatesModel.fromJson(json),
       unit = UnitWeather.metric;
 
@@ -94,8 +94,8 @@ class CoordinatesModel {
   CoordinatesModel({this.lat = 0, this.long = 0});
 
   CoordinatesModel.fromJson(Map<String, dynamic> json)
-    : lat = json['coord']["lat"] ?? 0,
-      long = json['coord']['lon'] ?? 0;
+    : lat = json['coord']["lat"] ?? 0.0,
+      long = json['coord']['lon'] ?? 0.0;
 
   @override
   String toString() {

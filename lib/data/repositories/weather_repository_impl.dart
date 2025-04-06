@@ -47,7 +47,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
     WeatherModel weatherModel,
   ) async {
     // TODO: implement getForecast3Hour
-
     try {
       Map<String, List<WeatherModel>> data = {};
 
@@ -57,6 +56,7 @@ class WeatherRepositoryImpl implements WeatherRepository {
         units: weatherModel.unit.name,
         cnt: 40, // 40 for 5 day, 24 /3 = 8/day
       );
+
       if (response['list'] != null && response['list'] != []) {
         response['list'].forEach((value) {
           WeatherModel item = WeatherModel.fromJsonForecast(
@@ -66,7 +66,8 @@ class WeatherRepositoryImpl implements WeatherRepository {
           DateTime date = DateTime.fromMillisecondsSinceEpoch(
             item.timestamp * 1000,
           );
-
+          print("datadatadatadata");
+          print(item);
           String nameWeekDay = DateFormat.EEEE().format(date);
           //check weekday
           if (data.containsKey(date.weekday.toString())) {
@@ -77,8 +78,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
             });
           }
         });
-        print("datadatadatadata");
-        print(data);
       }
       return data;
     } catch (exception) {

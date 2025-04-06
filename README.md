@@ -1,6 +1,10 @@
 # weather
 
 A Weather project.
+## Config
+-   SDK 3.7.2
+-   Flutter 3.29.2
+
 
 ## Project structure
 lib/
@@ -11,7 +15,10 @@ lib/
 │   │   ├── app_string.dart #lang
 │   │   ├── app_style.dart #style - include padding, margin, spaces...
 │   │   ├── app_themes.dart #themes of the application, text, background...
-│
+├── data/
+│   ├── repositories/
+│   │   ├── app_colors.dart #all colors in app
+│   ├── service/
 ├── models/            # Data models
 ├── views/       
 │   │   ├── home/
@@ -28,8 +35,12 @@ lib/
 
 ## plugins (pub.dev)
 flutter_bloc: ^9.1.0
-google_fonts: ^6.2.1
 flutter_animate: ^4.5.2
+geolocator: ^13.0.4
+flutter_dotenv: ^5.2.1
+dio: ^5.8.0+1
+get_it: ^8.0.3
+intl: ^0.20.2
 
 
 

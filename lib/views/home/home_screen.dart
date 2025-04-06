@@ -6,6 +6,7 @@ import 'package:weather/models/weather_model.dart';
 
 import 'package:weather/views/home/bloc/home_bloc.dart';
 import 'package:weather/views/home/bloc/home_state.dart';
+import 'package:weather/views/home/widget/rain_widget.dart';
 
 import '../../core/theme/theme.dart';
 import '../../data/repositories/weather_repository_impl.dart';
